@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/bi-modules",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@progress/kendo-angular-buttons",
+    "@progress/kendo-angular-common",
+    "@progress/kendo-angular-icons",
+    "@progress/kendo-angular-l10n",
+    "@progress/kendo-angular-popup",
+    "@progress/kendo-licensing",
+    "@progress/kendo-svg-icons",
+    "@progress/kendo-theme-default",
+    "bootstrap"
+  ]
+}

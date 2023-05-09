@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-end m-5">
+  <button
+    kendoButton
+    imageUrl="../../../assets/icons/add_black_24dp.svg"
+    fillMode="none"
+    (click)="AddRow()"
+    class="nav-btn border-0"
+  >
+  </button>
+  <button
+    kendoButton
+    imageUrl="../../../assets/icons/delet.svg"
+    fillMode="none"
+    class="nav-delete-btn nav-btn"
+    (click)="DeleteRow()"
+  >
+  </button>
+  <button
+    kendoButton
+    imageUrl="../../../assets/icons/attach_file_black_24dp.svg"
+    fillMode="none"
+    class="nav-btn border-0"
+  >
+  </button>
+  <button
+    kendoButton
+    imageUrl="../../../assets/icons/info_black_24dp.svg"
+    fillMode="none"
+    class="nav-info-btn nav-btn"
+  >
+  </button>
+  <button
+    kendoButton
+    fillMode="none"
+    class="nav-save-btn nav-btn px-2"
+    (click)="Save()"
+  >
+    <span class="k-icon k-i-save d-inline-block mb-1"></span><span class="k-pl-2 ">Save</span>
+  </button>
+  <button
+    kendoButton
+    imageUrl="../../../assets/icons/clear_black_24dp.svg"
+    fillMode="none"
+    class="nav-cancel-btn nav-btn px-2"
+    (click)="Cancel()"
+  >
+    <p class="k-pl-2 my-0">Cancel Edits</p>
+  </button>
+</div>

@@ -1,0 +1,37 @@
+/* variables */
+
+$save-clr: #0ACF97;
+$cancel-clr: #C70015;
+$dashed-clr: #B9C3D280;
+
+
+/* mixins */
+
+@mixin btn-borders($color){
+  border: 1px solid $color;
+  color: $color;
+}
+@mixin dashed-line{
+  padding-right: 1%;
+  border-width: 0;
+  border-radius: 0;
+  border-right: 0.5px dashed $dashed-clr;
+}
+
+
+/* nav buttons styles */
+
+
+.nav-btn {
+  margin: 0.5%;
+  &.nav-save-btn {
+    @include btn-borders($save-clr)
+  }
+
+  &.nav-delete-btn, &.nav-info-btn {
+   @include dashed-line;
+  }
+  &.nav-cancel-btn {
+   @include btn-borders($cancel-clr)
+  }
+}
