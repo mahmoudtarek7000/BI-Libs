@@ -1,1 +1,10 @@
-<p>bi-grid works!</p>
+<kendo-grid (pageChange)="pageChange($event)" #Grid [filterable]="'menu'" (dataStateChange)="onValueChange($event)"
+    [data]="GridData | async" [pageable]="true" [pageSize]="state.take ? state.take : 0"
+    [skip]="state.skip? state.skip: 0" [selectable]="true" [kendoGridReactiveEditing]="createFormGroup"
+    (cellClick)="cellClickHandler($event)">
+    <kendo-grid-column [width]="20"></kendo-grid-column>
+    <ng-container *ngFor="let res of Columns">
+        <kendo-grid-column [hidden]="!res.IsVisible" [filter]="res.DataType" [field]="res.Name"
+            [title]="res.DisplayName"></kendo-grid-column>
+    </ng-container>
+</kendo-grid>
