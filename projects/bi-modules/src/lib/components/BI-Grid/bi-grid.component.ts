@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { CellClickEvent, CreateFormGroupArgs, GridComponent, GridItem, PageChangeEvent } from '@progress/kendo-angular-grid';
+import { CellClickEvent, CellCloseEvent, CreateFormGroupArgs, GridComponent, GridItem, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { State, toODataString } from "@progress/kendo-data-query";
 import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
 import { AlertService } from '@full-fledged/alerts';
@@ -72,6 +72,20 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 		this.GetGridData();
 	}
+
+	cellCloseHandler(args: CellCloseEvent) {
+		const { formGroup, dataItem } = args;
+
+        if (!formGroup.valid) {
+            // prevent closing the edited cell if there are invalid values.
+            args.preventDefault();
+        } 
+		this.assignValues(dataItem, formGroup.value);
+	}
+
+	public assignValues(target: any, source: any): void {
+        Object.assign(target, source);
+    }
 
 	public trackByItem(index: number, item: GridItem): any {
 		return item.data;

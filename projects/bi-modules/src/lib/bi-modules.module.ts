@@ -18,8 +18,6 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { CommonModule } from '@angular/common';
 import { BIGridLayoutComponent } from './components/bi-grid-layout/bi-grid-layout.component';
 import { BIGridLayoutItemComponent } from './components/bi-grid-layout-item/bi-grid-layout-item.component';
-import { BITabStripComponent } from './components/bi-tab-strip/bi-tab-strip.component';
-import { BITabStripTabComponent } from './components/bi-tab-strip-tab/bi-tab-strip-tab.component';
 
 
 @NgModule({
@@ -27,9 +25,7 @@ import { BITabStripTabComponent } from './components/bi-tab-strip-tab/bi-tab-str
     BiNavComponent,
     BIGridComponent,
     BIGridLayoutComponent,
-    BIGridLayoutItemComponent,
-    BITabStripComponent,
-    BITabStripTabComponent
+    BIGridLayoutItemComponent
   ],
   imports: [
     BrowserModule,
@@ -49,9 +45,7 @@ import { BITabStripTabComponent } from './components/bi-tab-strip-tab/bi-tab-str
     BiNavComponent,
     BIGridComponent,
     BIGridLayoutComponent,
-    BIGridLayoutItemComponent,
-    BITabStripComponent,
-    BITabStripTabComponent
+    BIGridLayoutItemComponent
   ]
 })
 export class BIModulesModule { }
