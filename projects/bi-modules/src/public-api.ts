@@ -7,4 +7,6 @@ export * from './lib/components/BI-Nav/bi-nav.component';
 export * from './lib/components/BI-Grid/bi-grid.component';
 export * from './lib/components/bi-grid-layout-item/bi-grid-layout-item.component';
 export * from './lib/components/bi-grid-layout/bi-grid-layout.component';
+export * from './lib/components/bi-tab-strip/bi-tab-strip.component';
+export * from './lib/components/bi-tab-strip-tab/bi-tab-strip-tab.component';
 export * from './lib/bi-modules.module';
