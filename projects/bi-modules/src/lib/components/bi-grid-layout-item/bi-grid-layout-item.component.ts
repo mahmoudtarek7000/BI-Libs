@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lib-bi-grid-layout-item',
+  selector: 'BI-grid-layout-item',
   templateUrl: './bi-grid-layout-item.component.html',
   styleUrls: ['./bi-grid-layout-item.component.css']
 })

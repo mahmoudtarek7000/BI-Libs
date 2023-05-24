@@ -21,7 +21,7 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 	@Output() CellClick = new EventEmitter<CellClickEvent>();
 	@ViewChild("Grid") Mygrid!: GridComponent;
 	form: any = {};
-	formGroup!: FormGroup;
+	CurrentSelectRow!: FormGroup;
 	GridData!: any;
 	state: State = { skip: 0, take: 10 };
 	rowIndex!: number;
@@ -51,10 +51,14 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 
 	createFormGroup(args: CreateFormGroupArgs | any): FormGroup {
 		this.rowIndex = args.rowIndex;
-		const item = args.dataItem;
-		this.formGroup = this.formBuilder.group(this.form);
-		this.formGroup.patchValue(item)
-		return this.formGroup;
+		const item = args.dataItem;		
+		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
+		this.CurrentSelectRow.patchValue(item)
+		return this.CurrentSelectRow;
+	}
+
+	closeHandler(event: any) {
+		this.CurrentSelectRow.patchValue(event.formGroup.value)
 	}
 
 	GetGridData() {
@@ -76,16 +80,16 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 	cellCloseHandler(args: CellCloseEvent) {
 		const { formGroup, dataItem } = args;
 
-        if (!formGroup.valid) {
-            // prevent closing the edited cell if there are invalid values.
-            args.preventDefault();
-        } 
+		if (!formGroup.valid) {
+			// prevent closing the edited cell if there are invalid values.
+			args.preventDefault();
+		}
 		this.assignValues(dataItem, formGroup.value);
 	}
 
 	public assignValues(target: any, source: any): void {
-        Object.assign(target, source);
-    }
+		Object.assign(target, source);
+	}
 
 	public trackByItem(index: number, item: GridItem): any {
 		return item.data;
@@ -135,9 +139,9 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 		this.BeforeAction();
 		if (isNaN(this.rowIndex)) {
 			// Save Create
-			if (this.formGroup?.valid) {
-				this.DataService.add(this.formGroup.getRawValue()).subscribe((res: any) => {
-					this.data['data'].push(this.formGroup.getRawValue());
+			if (this.CurrentSelectRow?.valid) {
+				this.DataService.add(this.CurrentSelectRow.getRawValue()).subscribe((res: any) => {
+					this.data['data'].push(this.CurrentSelectRow.getRawValue());
 					this.Mygrid.closeRow();
 					this.GetGridData();
 					this.handleFormGroup();
@@ -146,8 +150,8 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 			};
 		} else {
 			// Save Update
-			if (this.formGroup?.valid) {
-				this.DataService.edit(this.formGroup.getRawValue(), this.formGroup.getRawValue()[this.Key]).subscribe((res: any) => {
+			if (this.CurrentSelectRow?.valid) {
+				this.DataService.edit(this.CurrentSelectRow.getRawValue(), this.CurrentSelectRow.getRawValue()[this.Key]).subscribe((res: any) => {
 					this.Mygrid.closeRow(this.rowIndex);
 					this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 					this.GetGridData();
