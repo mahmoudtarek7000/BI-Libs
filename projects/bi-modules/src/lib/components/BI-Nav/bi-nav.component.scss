@@ -21,7 +21,7 @@ $border-clr: #3688FC;
 
 .nav-container{
   background-color: $bg-clr;
-  width: 22%;
+  width: "22%";
   .save-grb {
     @include btn-borders($save-clr);
   }
