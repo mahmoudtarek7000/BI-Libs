@@ -103,7 +103,7 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 	}
 
 	AddRow() {
-		this.CurrentSelectRow.reset()
+		this.CurrentSelectRow?.reset()
 		this.Mygrid.addRow(this.createFormGroup(this.newForm));
 	}
 
