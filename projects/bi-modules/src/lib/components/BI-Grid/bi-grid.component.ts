@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CellClickEvent, CellCloseEvent, CreateFormGroupArgs, GridComponent, GridItem, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { State, toODataString } from "@progress/kendo-data-query";
 import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
@@ -12,7 +12,7 @@ import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
 	templateUrl: './bi-grid.component.html',
 	styleUrls: ['./bi-grid.component.scss']
 })
-export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
+export class BIGridComponent implements IGrid, OnInit {
 	@Input() public DataService!: IDataService;
 	@Input() Columns!: IColumns[];
 	@Input() Key!: string;
@@ -31,34 +31,32 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 
 	constructor(
 		private formBuilder: FormBuilder,
-		private alertService: AlertService
+		private alertService: AlertService, 
+		private cd: ChangeDetectorRef
 	) { }
 
 	ngOnInit(): void {
 		this.GetGridData();
 		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
-		this.createFormGroup = this.createFormGroup.bind(this);
-	}
-
-	ngAfterViewInit() {
-		this.SelectedRowChanged();
 		this.handleFormGroup();
+		this.createFormGroup = this.createFormGroup.bind(this);
 	}
 
 	handleFormGroup() {
 		this.Columns.forEach(res => this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]);
+		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
+		this.CurrentSelectRow.valueChanges.subscribe(res => {
+			if(this.dataItem) {
+				Object.assign(this.dataItem, res);
+			}
+		})
 	}
 
 	createFormGroup(args: CreateFormGroupArgs | any): FormGroup {
 		this.rowIndex = args.rowIndex;
-		const item = args.dataItem;		
-		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
-		this.CurrentSelectRow.patchValue(item)
+		const item = args.dataItem;
+		this.CurrentSelectRow.patchValue(item);
 		return this.CurrentSelectRow;
-	}
-
-	closeHandler(event: any) {
-		this.CurrentSelectRow.patchValue(event.formGroup.value)
 	}
 
 	GetGridData() {
@@ -85,6 +83,7 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 			args.preventDefault();
 		}
 		this.assignValues(dataItem, formGroup.value);
+		this.CurrentSelectRow.patchValue(formGroup.value);
 	}
 
 	public assignValues(target: any, source: any): void {
@@ -93,13 +92,6 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 
 	public trackByItem(index: number, item: GridItem): any {
 		return item.data;
-	}
-
-	SelectedRowChanged() {
-		this.Mygrid.cellClick.subscribe((res: any) => {
-			this.dataItem = res?.['dataItem'];
-			this.CellClick.emit(res);
-		});
 	}
 
 	AddRow() {
@@ -116,6 +108,8 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 	};
 
 	public cellClickHandler(args: CellClickEvent): void {
+		this.dataItem = args.dataItem;
+		this.CellClick.emit(args);
 		if (!args.isEdited) {
 			args.sender.editCell(
 				args.rowIndex,
@@ -134,6 +128,8 @@ export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 		this.GetGridData();
 		this.Mygrid.closeRow(this.rowIndex);
+		this.CurrentSelectRow.reset();
+		this.dataItem = null
 	}
 
 	Save() {
