@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
 import { IDataService } from 'bi-interfaces/lib/interfaces/IDataService';
 import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
-import { BehaviorSubject, Observable, Subject, of, take } from 'rxjs';
+import { Subject, take } from 'rxjs';
 @Component({
 	selector: 'BI-Grid',
 	templateUrl: './bi-grid.component.html',
@@ -88,7 +88,7 @@ export class BIGridComponent implements IGrid, OnInit {
 		}
 		this.assignValues(dataItem, formGroup.value);
 		this.CurrentSelectRow.patchValue(formGroup.value);
-		if (formGroup.dirty && !isNaN(this.rowIndex)) this.UpdatedItemArray.push({...formGroup.value});
+		if (formGroup.dirty && !isNaN(this.rowIndex)) this.UpdatedItemArray.push({ ...formGroup.value });
 	}
 
 	public assignValues(target: any, source: any): void {
@@ -138,7 +138,7 @@ export class BIGridComponent implements IGrid, OnInit {
 	}
 
 	async Save() {
-		if(!this.dataItem) this.CreatedItemArray.push({...this.createFormGroup(this.newForm).value});
+		if (!this.dataItem) this.CreatedItemArray.push({ ...this.createFormGroup(this.newForm).value });
 		await this.BeforeAction();
 		this.StopSave?.pipe(take(1)).subscribe((res: any) => {
 			if (res) {
