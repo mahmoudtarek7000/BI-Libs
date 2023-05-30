@@ -146,7 +146,7 @@ export class BIGridComponent implements IGrid, OnInit {
 					// Save Create
 					if (this.CurrentSelectRow?.valid) {
 						this.DataService.add(this.CurrentSelectRow.getRawValue()).subscribe((res: any) => {
-							this.data['data'].push(this.CurrentSelectRow.getRawValue());
+							this.data['data'].unshift(this.CurrentSelectRow.getRawValue());
 							this.Mygrid.closeRow();
 							this.GetGridData();
 							this.handleFormGroup();
