@@ -6,7 +6,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
 import { IDataService } from 'bi-interfaces/lib/interfaces/IDataService';
 import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
-import { Subject, take } from 'rxjs';
+import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 @Component({
 	selector: 'BI-Grid',
 	templateUrl: './bi-grid.component.html',
