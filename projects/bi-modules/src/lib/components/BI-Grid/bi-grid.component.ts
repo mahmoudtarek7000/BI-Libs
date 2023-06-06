@@ -39,7 +39,8 @@ export class BIGridComponent implements IGrid, OnInit {
 		private cd: ChangeDetectorRef
 	) { }
 
-	ngOnInit(): void {
+	ngOnInit() {
+		this.DataService.Columns.forEach(res => this.form[res.Name] = [""]);
 		this.GetGridData();
 		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 		this.handleFormGroup();
@@ -49,7 +50,9 @@ export class BIGridComponent implements IGrid, OnInit {
 	}
 
 	handleFormGroup() {
-		this.Columns.forEach(res => this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]);
+		this.Columns.forEach(res => {
+			if(this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]
+		});
 		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
 		this.CurrentSelectRow.valueChanges.subscribe(res => {
 			if (this.dataItem) {
@@ -63,7 +66,7 @@ export class BIGridComponent implements IGrid, OnInit {
 		const item = args.dataItem;
 		this.CurrentSelectRow.patchValue(item);
 		console.log(this.CurrentSelectRow.value);
-		
+
 		return this.CurrentSelectRow;
 	}
 
