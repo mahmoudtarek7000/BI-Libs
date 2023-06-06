@@ -4,7 +4,7 @@ import { State, toODataString } from "@progress/kendo-data-query";
 import { AlertService } from '@full-fledged/alerts';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
-import { IDataService } from 'bi-interfaces/lib/interfaces/IDataService';
+import { IDataSource } from 'bi-interfaces/lib/interfaces/IDataSource';
 import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { take } from 'rxjs/operators';
 	styleUrls: ['./bi-grid.component.scss']
 })
 export class BIGridComponent implements IGrid, OnInit {
-	@Input() public DataService!: IDataService;
+	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
 	@Input() Key!: string;
 	@Input() GridName!: string;
@@ -62,6 +62,8 @@ export class BIGridComponent implements IGrid, OnInit {
 		this.rowIndex = args.rowIndex;
 		const item = args.dataItem;
 		this.CurrentSelectRow.patchValue(item);
+		console.log(this.CurrentSelectRow.value);
+		
 		return this.CurrentSelectRow;
 	}
 

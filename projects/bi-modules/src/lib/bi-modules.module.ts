@@ -15,6 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { DialogsModule } from "@progress/kendo-angular-dialog";
 import { CommonModule } from '@angular/common';
 import { BIGridLayoutComponent } from './components/bi-grid-layout/bi-grid-layout.component';
 import { BIGridLayoutItemComponent } from './components/bi-grid-layout-item/bi-grid-layout-item.component';
@@ -39,7 +40,8 @@ import { BIGridLayoutItemComponent } from './components/bi-grid-layout-item/bi-g
     ButtonModule,
     CommonModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionY: "top" }),
-    LayoutModule
+    LayoutModule,
+    DialogsModule
   ],
   exports: [
     BiNavComponent,
