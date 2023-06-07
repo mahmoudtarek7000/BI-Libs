@@ -1,7 +1,7 @@
 <kendo-grid #Grid [filterable]="'menu'" [data]="GridData | async" [pageable]="true"
     [pageSize]="state.take ? state.take : 0" [sortable]="true" [skip]="state.skip? state.skip: 0" [resizable]="true"
     [selectable]="true" [kendoGridReactiveEditing]="createFormGroup" (cellClick)="cellClickHandler($event)"
-    (pageChange)="pageChange($event)" (dataStateChange)="onValueChange($event)" (cellClose)="cellCloseHandler($event)">
+     (dataStateChange)="onValueChange($event)" (cellClose)="cellCloseHandler($event)">
     <ng-container *ngFor="let res of Columns" [ngSwitch]="res.controlType">
 
         <kendo-grid-column *ngSwitchDefault [hidden]="!res.IsVisible" [filter]="res.DataType" [field]="res.Name"
