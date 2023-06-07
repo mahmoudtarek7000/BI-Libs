@@ -5,19 +5,26 @@
 .side-content-container {
   width: 240px;
   height: 100vh;
-  ::ng-deep .k-expander-header[aria-expanded="false"]{
-  ::ng-deep .k-expander-title {
-    color: #313A46;
-  }
+  kendo-expansionpanel{
+    ::ng-deep .k-expander-title {
+        color: #313A46;
+      }
+      &.child-expansion{
+        ::ng-deep &.k-expanded {
+            background-color: #ffff !important;
+            button {
+                background-color: #ffff;
+            }
+        }
+        ::ng-deep .k-expander-header[aria-expanded="true"] {
+            @extend %selection-effect;
+            ::ng-deep .k-expander-title {
+                color: #3688FC;
+              }    
+          }
+      } 
   }
   .sideBar-btn:hover {
     @extend %selection-effect;
-  }
-
-  ::ng-deep .k-expander-header[aria-expanded="true"] {
-    @extend %selection-effect;
-    ::ng-deep .k-expander-title {
-        color: #3688FC;
-      }    
   }
 }

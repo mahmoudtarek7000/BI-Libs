@@ -7,20 +7,20 @@
     <div *ngIf="item.children">
       <div *ngFor="let child of item.children; index as i">
         <div *ngIf="child.children" class="wrapper bg-light">
-          <kendo-expansionpanel [title]="child.text" class="bg-light">
+          <kendo-expansionpanel [title]="child.text" class="bg-light border-0">
             <div *ngIf="child.children" class="content bg-light">
               <div *ngFor="let grandChild of child.children; index as i" class="d-grid gap-2 w-100">
                 <ng-container *ngIf="grandChild.children">
-                  <kendo-expansionpanel [title]="grandChild.text" class="bg-light">
+                  <kendo-expansionpanel [title]="grandChild.text" class="bg-light child-expansion border-0">
                     <div class="content bg-light">
                       <div *ngFor="let greatGrandChild of grandChild.children; index as i" class="d-grid gap-2 w-100">
-                        <button [routerLink]="greatGrandChild.path" class="btn sideBar-btn text-nowrap my-2 text-start" type="button">{{greatGrandChild.text}}</button>
+                        <button [routerLink]="greatGrandChild.path" class="btn sideBar-btn text-nowrap py-2 text-start border-0" type="button">{{greatGrandChild.text}}</button>
                       </div>
                     </div>
                   </kendo-expansionpanel>
                 </ng-container>
                 <ng-container *ngIf="!grandChild.children">
-                  <button [routerLink]="grandChild.path" class="btn sideBar-btn text-nowrap my-2 text-start" type="button">{{grandChild.text}}</button>
+                  <button [routerLink]="grandChild.path" class="btn sideBar-btn text-nowrap py-2 text-start border-0" type="button">{{grandChild.text}}</button>
                 </ng-container>
               </div>
             </div>
