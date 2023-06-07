@@ -55,7 +55,9 @@ import { RouterModule } from '@angular/router';
     BiNavComponent,
     BIGridComponent,
     BIGridLayoutComponent,
-    BIGridLayoutItemComponent
+    BIGridLayoutItemComponent,
+    BISideBarComponent,
+    SideBarContentComponent
   ]
 })
 export class BIModulesModule { }

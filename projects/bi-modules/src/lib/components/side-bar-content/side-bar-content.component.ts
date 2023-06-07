@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'SideBar-content',
@@ -11,9 +11,9 @@ export class SideBarContentComponent {
   @Input() collapsed!: boolean;
   @Output() backToNav = new EventEmitter<any>();
 
-  returnToNav(): void{
-this.selectedItem = "";
-this.collapsed = false;
-this.backToNav.emit();
+  returnToNav(): void {
+    this.selectedItem = "";
+    this.collapsed = false;
+    this.backToNav.emit();
   }
 }
