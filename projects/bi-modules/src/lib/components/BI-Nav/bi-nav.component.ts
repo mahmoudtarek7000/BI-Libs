@@ -49,11 +49,13 @@ export class BiNavComponent implements INav {
   * @return void
   */
   Info(): void {
-    console.log(this.BIGrid.Key);
-    this.opened = true; 
+    if (this.BIGrid.CurrentSelectRow.value[this.BIGrid.DataService.Key]) this.opened = true;
   };
 
-
+  /**
+    * close info popup
+    * @return void
+  */
   close(status: string): void {
     this.opened = false;
   }

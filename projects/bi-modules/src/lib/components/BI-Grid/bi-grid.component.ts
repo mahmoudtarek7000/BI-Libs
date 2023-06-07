@@ -16,7 +16,6 @@ import { take } from 'rxjs/operators';
 export class BIGridComponent implements IGrid, OnInit {
 	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
-	@Input() Key!: string;
 	@Input() GridName!: string;
 	@Input() refGrid!: string;
 	@Output() CellClick = new EventEmitter<CellClickEvent>();
@@ -51,7 +50,7 @@ export class BIGridComponent implements IGrid, OnInit {
 
 	handleFormGroup() {
 		this.Columns.forEach(res => {
-			if(this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]
+			if (this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]
 		});
 		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
 		this.CurrentSelectRow.valueChanges.subscribe(res => {
@@ -65,8 +64,6 @@ export class BIGridComponent implements IGrid, OnInit {
 		this.rowIndex = args.rowIndex;
 		const item = args.dataItem;
 		this.CurrentSelectRow.patchValue(item);
-		console.log(this.CurrentSelectRow.value);
-
 		return this.CurrentSelectRow;
 	}
 
@@ -78,12 +75,6 @@ export class BIGridComponent implements IGrid, OnInit {
 	}
 
 	BeforeAction(): void {
-	}
-
-	public pageChange(event: PageChangeEvent): void {
-		this.state.skip = event.skip;
-		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
-		this.GetGridData();
 	}
 
 	cellCloseHandler(args: CellCloseEvent) {
@@ -111,7 +102,7 @@ export class BIGridComponent implements IGrid, OnInit {
 	}
 
 	DeleteRow() {
-		this.DataService.delete(this.dataItem[this.Key]).subscribe((res: any) => {
+		this.DataService.delete(this.dataItem[this.DataService.Key]).subscribe((res: any) => {
 			this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 			this.GetGridData();
 			this.alertService.success("Deleted Successfully");
@@ -131,6 +122,7 @@ export class BIGridComponent implements IGrid, OnInit {
 	}
 
 	onValueChange(e: any) {
+		this.state.skip = e.skip;
 		this.DataService.read(toODataString(e) + '&$count=true');
 		this.GetGridData();
 	}
@@ -162,7 +154,7 @@ export class BIGridComponent implements IGrid, OnInit {
 				} else {
 					// Save Update
 					if (this.CurrentSelectRow?.valid) {
-						this.DataService.edit(this.CurrentSelectRow.getRawValue(), this.CurrentSelectRow.getRawValue()[this.Key]).subscribe((res: any) => {
+						this.DataService.edit(this.CurrentSelectRow.getRawValue(), this.CurrentSelectRow.getRawValue()[this.DataService.Key]).subscribe((res: any) => {
 							this.Mygrid.closeRow(this.rowIndex);
 							this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 							this.GetGridData();

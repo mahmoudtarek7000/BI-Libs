@@ -26,31 +26,33 @@
   </div>
 </div>
 
-<kendo-dialog title="Grade ID : 01 Information" *ngIf="opened" (close)="close('cancel')" [height]="188" [width]="919">
+<kendo-dialog
+  [title]="BIGrid.DataService.Key + ' : ' + BIGrid.CurrentSelectRow.value[BIGrid.DataService.Key] + ' Information'"
+  *ngIf="opened" (close)="close('cancel')" [height]="188" [width]="919">
   <div class="row">
     <div class="col-md-6 col-12 mb-2">
       <span class="key">Created By: </span>
-      <span class="value">11/03/2022</span>
+      <span class="value">{{BIGrid.CurrentSelectRow.value['Createdby']}}</span>
     </div>
     <div class="col-md-6 col-12 mb-2">
       <span class="key">Created On: </span>
-      <span class="value">11/03/2022</span>
+      <span class="value">{{BIGrid.CurrentSelectRow.value['CreatedOn']}}</span>
     </div>
     <div class="col-md-6 col-12 mb-2">
       <span class="key">Modified By: </span>
-      <span class="value">11/03/2022</span>
+      <span class="value">{{BIGrid.CurrentSelectRow.value['ModifiedBy']}}</span>
     </div>
     <div class="col-md-6 col-12 mb-2">
       <span class="key">Modified On: </span>
-      <span class="value">11/03/2022</span>
+      <span class="value">{{BIGrid.CurrentSelectRow.value['ModifiedOn']}}</span>
     </div>
     <div class="col-md-6 col-12 mb-2">
       <span class="key">BUID: </span>
-      <span class="value">11/03/2022</span>
+      <span class="value">{{BIGrid.CurrentSelectRow.value['buid']}}</span>
     </div>
     <div class="col-md-6 col-12 mb-2">
       <span class="key">Record Source: </span>
-      <span class="value">11/03/2022</span>
+      <span class="value">{{BIGrid.CurrentSelectRow.value['RecordSource']}}</span>
     </div>
   </div>
 </kendo-dialog>
