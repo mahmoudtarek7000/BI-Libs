@@ -56,7 +56,7 @@ export class BiNavComponent implements INav {
     * close info popup
     * @return void
   */
-  close(status: string): void {
+  Close(): void {
     this.opened = false;
   }
 }
