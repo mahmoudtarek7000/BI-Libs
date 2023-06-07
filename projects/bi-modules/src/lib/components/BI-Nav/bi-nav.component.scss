@@ -8,42 +8,81 @@ $border-clr: #3688FC;
 
 /* mixins */
 
-@mixin btn-borders($color){
+@mixin btn-borders($color) {
   border: 1px solid $color;
   color: $color;
   border-radius: 5px;
 }
-@mixin left-border($clr){
+
+@mixin left-border($clr) {
   border-left: 1px solid $clr;
   border-radius: 0 5px 5px 0;
 }
 
 /* nav buttons styles */
 
-.nav-container{
+.nav-container {
   background-color: $bg-clr;
   width: 18rem;
+
   .save-grb {
     @include btn-borders($save-clr);
   }
-  .info-grb{
+
+  .info-grb {
     @include btn-borders($border-clr);
   }
-  .delete-grb{
+
+  .delete-grb {
     @include btn-borders($cancel-clr);
   }
-.nav-btn {
-  border: 0;
-  margin: 0.5%;
-  border-radius: 5px;
-  &.nav-save-btn{
-    @include left-border($save-clr);
-  }
-  &.nav-cancel-btn{
-    @include left-border($cancel-clr);
-  }
-  &.nav-info-btn{
-    @include left-border($border-clr);
+
+  .nav-btn {
+    border: 0;
+    margin: 0.5%;
+    border-radius: 5px;
+
+    &.nav-save-btn {
+      @include left-border($save-clr);
+    }
+
+    &.nav-cancel-btn {
+      @include left-border($cancel-clr);
+    }
+
+    &.nav-info-btn {
+      @include left-border($border-clr);
+    }
   }
 }
+
+::ng-deep.k-dialog-titlebar {
+  text-align: left;
+  font: normal normal bold 20px/27px Nunito;
+  letter-spacing: 0px;
+  color: #313A46;
+  text-transform: capitalize;
+  background: #F1F3FA 0% 0% no-repeat padding-box;
+  border-radius: 8px 8px 0px 0px;
+}
+
+::ng-deep.k-dialog-wrapper .k-dialog {
+  border-radius: 5px;
+}
+
+::ng-deep .k-window-title {
+  font-size: 20px;
+}
+
+.key {
+  text-align: left;
+  font: normal normal bold 20px/27px Nunito;
+  color: #313A46;
+  text-transform: capitalize;
+}
+
+.value {
+  text-align: left;
+  font: normal normal normal 20px/27px Nunito;
+  color: #313A46;
 }

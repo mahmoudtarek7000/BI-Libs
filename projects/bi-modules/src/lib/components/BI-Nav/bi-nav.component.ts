@@ -1,5 +1,5 @@
-import {Component, ElementRef, Input, TemplateRef} from '@angular/core';
-import {INav} from "bi-interfaces/lib/interfaces/inav";
+import { Component, ElementRef, Input, TemplateRef } from '@angular/core';
+import { INav } from "bi-interfaces/lib/interfaces/inav";
 import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
 
 
@@ -8,9 +8,10 @@ import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
   templateUrl: 'bi-nav.component.html',
   styleUrls: ['bi-nav.component.scss']
 })
-export class BiNavComponent implements INav{
+export class BiNavComponent implements INav {
   @Input() BIGrid!: IGrid;
   @Input() enableSave!: boolean;
+  opened: boolean = false;
   constructor() {
   }
 
@@ -29,7 +30,7 @@ export class BiNavComponent implements INav{
     this.BIGrid.DeleteRow();
   };
   /**
-   * cancel edits in any cell
+   * save edits in any cell
    * @return void
    */
   Cancel(): void {
@@ -42,4 +43,18 @@ export class BiNavComponent implements INav{
   Save(): void {
     this.BIGrid.Save();
   };
+
+  /**
+  * info in any cell
+  * @return void
+  */
+  Info(): void {
+    console.log(this.BIGrid.Key);
+    this.opened = true; 
+  };
+
+
+  close(status: string): void {
+    this.opened = false;
+  }
 }

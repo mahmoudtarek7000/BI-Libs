@@ -4,7 +4,7 @@ import { State, toODataString } from "@progress/kendo-data-query";
 import { AlertService } from '@full-fledged/alerts';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
-import { IDataService } from 'bi-interfaces/lib/interfaces/IDataService';
+import { IDataSource } from 'bi-interfaces/lib/interfaces/IDataSource';
 import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { take } from 'rxjs/operators';
 	styleUrls: ['./bi-grid.component.scss']
 })
 export class BIGridComponent implements IGrid, OnInit {
-	@Input() public DataService!: IDataService;
+	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
 	@Input() Key!: string;
 	@Input() GridName!: string;
@@ -39,7 +39,8 @@ export class BIGridComponent implements IGrid, OnInit {
 		private cd: ChangeDetectorRef
 	) { }
 
-	ngOnInit(): void {
+	ngOnInit() {
+		this.DataService.Columns.forEach(res => this.form[res.Name] = [""]);
 		this.GetGridData();
 		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 		this.handleFormGroup();
@@ -49,7 +50,9 @@ export class BIGridComponent implements IGrid, OnInit {
 	}
 
 	handleFormGroup() {
-		this.Columns.forEach(res => this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]);
+		this.Columns.forEach(res => {
+			if(this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]
+		});
 		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
 		this.CurrentSelectRow.valueChanges.subscribe(res => {
 			if (this.dataItem) {
@@ -62,6 +65,8 @@ export class BIGridComponent implements IGrid, OnInit {
 		this.rowIndex = args.rowIndex;
 		const item = args.dataItem;
 		this.CurrentSelectRow.patchValue(item);
+		console.log(this.CurrentSelectRow.value);
+
 		return this.CurrentSelectRow;
 	}
 
