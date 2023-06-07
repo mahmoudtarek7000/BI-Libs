@@ -1,0 +1,40 @@
+<div class="input-group px-0 mt-2 mb-3 col-12" style="position:relative;">
+  <input type="text" class="form-control" [(ngModel)]="lookupValue" [title]="DescriptionText" [ngClass]="{'error': !Isvalid} "
+         [placeholder]="'Placeholder'" [disabled]="IsDisabled"
+         (change)="OnTextChange($event)"
+         (mouseover)="OnInputHover()"
+         (focus)="OnInputFocus()"
+         (contextmenu)="contextMenu.showContextMenu($event)">
+  <div class="input-group-append">
+    <button (click)="OpenModal()">
+      <img src="assets/images/more_horiz_black_24dp (2).svg" alt="">
+    </button>
+  </div>
+</div>
+<app-context-menu [TargetURL]="'http://localhost:4200/#/'" #contextMenu></app-context-menu>
+<jw-modal [id]="ModalID">
+  <div class="ng-tns-c32-1 k-window-titlebar k-dialog-titlebar k-header ng-star-inserted">
+    <div class="k-window-title k-dialog-title" style="font-size:17px"></div>
+    <div class="k-window-actions k-dialog-actions">
+      <button aria-label="Close"
+              class="k-button k-bare k-button-icon k-window-action k-dialog-action k-dialog-close"
+              (click)="CloseModal();" href="#" role="button"
+              [disabled]="IsDisabled">
+        <span class="k-icon k-i-x"></span>
+      </button>
+    </div>
+  </div>
+  <kendo-grid [data]="data | async" filterable="menu" [height]="300" [pageable]="true" [sortable]="true"
+              [pageSize]="state.take ? state.take : 0" [skip]="state.skip? state.skip: 0"
+              (dataStateChange)="FilterChange($event)"
+              (cellClick)="cellClickHandler($event)" [selectable]="true"
+              (dblclick)="dblClickEvent()">
+    <kendo-grid-column *ngFor="let res of DataSource.Columns" [field]="res.Name" [type]="res.DataType" title="{{res.Name|translate }}">
+    </kendo-grid-column>
+  </kendo-grid>
+
+  <div class="text-right">
+    <button class="btn" (click)="Save()">{{"OK" | translate}}</button>
+    <button class="btn" (click)="Cancel()">{{"Cancel" | translate}}</button>
+  </div>
+</jw-modal>
