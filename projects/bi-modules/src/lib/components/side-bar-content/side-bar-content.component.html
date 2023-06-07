@@ -7,7 +7,6 @@
     <div *ngFor="let child of item.children; index as i">
     <div *ngIf="child.children" class="wrapper bg-light">
       <kendo-expansionpanel
-        *ngFor="let child of item.children; index as i"
         [title]="child.text"
         class="bg-light"
       >
