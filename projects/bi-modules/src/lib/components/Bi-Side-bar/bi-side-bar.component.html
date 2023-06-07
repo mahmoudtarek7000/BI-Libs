@@ -1,0 +1,37 @@
+<div [style.max-width]="collapsed ? '50px': null" class="custom-toolbar text-nowrap ml-1 d-flex">
+    <div [style.background-color]="collapsed ? '#3688FC': null"  class="pb-0">
+      <kendo-button
+        fillMode="none"
+        icon="menu"
+        class="border-0 collapse-btn"
+        [ngClass]="collapsed ? 'text-white' : 'text-dark'"
+        (click)="drawer.toggle(); changeBackGround()"
+      ></kendo-button>
+    </div>
+    <div *ngIf="!collapsed" class="m-2 pb-1">
+      <img src="assets/images/salesbuzz-dark-logo.svg" alt="">
+    </div>
+    </div>
+    <kendo-drawer-container style="height: 100%">
+      <kendo-drawer
+        #drawer
+        [items]="items"
+        mode="push"
+        [mini]="true"
+        [expanded]="true"
+        (select)="onSelect($event)"
+        class="drawer"
+      >
+      <ng-template kendoDrawerItemTemplate let-item>
+        <img [src]="item.icon" />
+        <div *ngIf="!collapsed">
+          <div *ngIf="item.children">{{ item.text }}</div>
+          <div *ngIf="!item.children"><a [routerLink]="item.path" style="color: inherit;" class="text-decoration-none">{{ item.text }}</a></div>
+        </div>
+    </ng-template>
+      </kendo-drawer>
+
+      <kendo-drawer-content class="side-content">
+        <SideBar-content (backToNav)="drawer.toggle(); changeBackGround()" [collapsed]="collapsed" [items]="items" [selectedItem]="selected"></SideBar-content>
+      </kendo-drawer-content>
+    </kendo-drawer-container>

@@ -18,28 +18,38 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { CommonModule } from '@angular/common';
 import { BIGridLayoutComponent } from './components/bi-grid-layout/bi-grid-layout.component';
 import { BIGridLayoutItemComponent } from './components/bi-grid-layout-item/bi-grid-layout-item.component';
-
+import { BISideBarComponent } from './components/Bi-Side-bar/bi-side-bar.component';
+import { IconsModule } from '@progress/kendo-angular-icons';
+import { SideBarContentComponent } from './components/side-bar-content/side-bar-content.component';
+import { DialogsModule } from "@progress/kendo-angular-dialog";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     BiNavComponent,
     BIGridComponent,
     BIGridLayoutComponent,
-    BIGridLayoutItemComponent
+    BIGridLayoutItemComponent,
+    BISideBarComponent,
+    SideBarContentComponent
   ],
   imports: [
     BrowserModule,
+    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionY: "top" }),
+    IconsModule,
     BrowserAnimationsModule,
     DateInputsModule,
+    BrowserAnimationsModule,
     GridModule,
+    HttpClientModule,
     ReactiveFormsModule,
     PagerModule,
     FilterModule,
-    DropDownListModule,
+    LayoutModule,
     ButtonModule,
-    CommonModule,
-    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionY: "top" }),
-    LayoutModule
+    DropDownListModule,
+    DialogsModule,
+    RouterModule
   ],
   exports: [
     BiNavComponent,

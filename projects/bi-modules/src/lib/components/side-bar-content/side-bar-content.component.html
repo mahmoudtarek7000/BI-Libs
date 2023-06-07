@@ -1,0 +1,27 @@
+<div *ngFor="let item of items">
+    <div class="side-content-container" *ngIf="(selectedItem === item.text) && item.children">
+    <div class="d-flex">
+      <kendo-button (click)="returnToNav()" class="py-0 px-2 mt-1" fillMode="clear" imageUrl="assets/icons/back.svg"></kendo-button><p class="text-nowrap text-center m-3">{{item.text}}</p>
+    </div>
+  <div *ngIf="item.children">
+    <div *ngFor="let child of item.children; index as i">
+    <div *ngIf="child.children" class="wrapper bg-light">
+      <kendo-expansionpanel
+        *ngFor="let child of item.children; index as i"
+        [title]="child.text"
+        class="bg-light"
+      >
+        <div *ngIf="child.children" class="content bg-light">
+          <div *ngFor="let grandChild of child.children; index as i" class="d-grid gap-2 w-100">
+            <button [routerLink]="grandChild.path" class="btn sideBar-btn text-nowrap my-2 text-start" type="button">{{grandChild.text}}</button>
+          </div>
+        </div>
+      </kendo-expansionpanel>
+    </div>
+    <div class="d-grid gap-2 w-100" *ngIf="!child.children">
+      <button [routerLink]="child.path" class="btn sideBar-btn text-nowrap my-2 text-start" type="button">{{child.text}}</button>
+  </div>
+  </div>
+    </div>
+  </div>
+  </div>
