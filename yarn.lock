@@ -1394,7 +1394,7 @@
   dependencies:
     "@progress/pako-esm" "^1.0.1"
 
-"@progress/kendo-angular-buttons@^12.0.1", "@progress/kendo-angular-buttons@12.0.1", "@progress/kendo-angular-buttons@12.1.0":
+"@progress/kendo-angular-buttons@^12.0.1", "@progress/kendo-angular-buttons@12.0.1", "@progress/kendo-angular-buttons@12.1.0", "@progress/kendo-angular-buttons@13.0.2":
   "integrity" "sha512-morZQQ+ZFKtOsZ/vEcIQMYc1rduLxztbO0Rln5k7gTtsaDj2PCcY/608K9ZPJ+cde4rA5/7IYaGsKy5VPts6Gg=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-buttons/-/kendo-angular-buttons-12.0.1.tgz"
   "version" "12.0.1"
@@ -1403,7 +1403,7 @@
     "@progress/kendo-common" "^0.2.1"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-common@12.0.0", "@progress/kendo-angular-common@12.0.1", "@progress/kendo-angular-common@12.1.0":
+"@progress/kendo-angular-common@12.0.0", "@progress/kendo-angular-common@12.0.1", "@progress/kendo-angular-common@12.1.0", "@progress/kendo-angular-common@13.0.2":
   "integrity" "sha512-OvdxT0hno5v72ySbUl+M/3a7PGfbdcbz7mUnTz73NZscWDDWISw5jpV25cW2EcRI5sT1dJ1bRulanKx7H/pnEg=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-common/-/kendo-angular-common-12.0.0.tgz"
   "version" "12.0.0"
@@ -1423,12 +1423,12 @@
     "@progress/kendo-date-math" "^1.1.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-dialog@12.0.1":
-  "integrity" "sha512-OnFpAQv9/Y8OfgKWwxVTQYSABXs9x+tvVDfr1sCJYYywx4T9Aen0ri44IfsYnSQ0ZarjUdPV+Qvw0lUMV7NYzA=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-dialog/-/kendo-angular-dialog-12.0.1.tgz"
-  "version" "12.0.1"
+"@progress/kendo-angular-dialog@^13.0.2", "@progress/kendo-angular-dialog@12.0.1":
+  "integrity" "sha512-1lIlLyMvjHvz3syULgUoDoP1acScHYtJfeDf3XXO/teK698oEUVCkxP+k2SknE1Yq7NBlzJd9Y+9fJbp/OQqRQ=="
+  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-dialog/-/kendo-angular-dialog-13.0.2.tgz"
+  "version" "13.0.2"
   dependencies:
-    "@progress/kendo-angular-schematics" "12.0.1"
+    "@progress/kendo-angular-schematics" "13.0.2"
     "@progress/kendo-popup-common" "^1.7.0"
     "tslib" "^2.3.1"
 
@@ -1470,7 +1470,7 @@
     "@progress/kendo-file-saver" "^1.0.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-icons@12.0.0", "@progress/kendo-angular-icons@12.0.1", "@progress/kendo-angular-icons@12.1.0":
+"@progress/kendo-angular-icons@12.0.0", "@progress/kendo-angular-icons@12.0.1", "@progress/kendo-angular-icons@12.1.0", "@progress/kendo-angular-icons@13.0.2":
   "integrity" "sha512-6IukvwBgagYaowfF77E9wSLBkeS0LQ2lIesh2n80+RwsiSiMZbAjLOSfRfz2ic+zQv1LelsLWWZnV5SbiIBHEQ=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-icons/-/kendo-angular-icons-12.0.0.tgz"
   "version" "12.0.0"
@@ -1498,7 +1498,7 @@
     "@progress/kendo-intl" "^3.1.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-l10n@12.0.0", "@progress/kendo-angular-l10n@12.0.1", "@progress/kendo-angular-l10n@12.1.0":
+"@progress/kendo-angular-l10n@12.0.0", "@progress/kendo-angular-l10n@12.0.1", "@progress/kendo-angular-l10n@12.1.0", "@progress/kendo-angular-l10n@13.0.2":
   "integrity" "sha512-jPO4tcDgc8zsiC7eiLrotgqQ+TuUfKAjHjCyuNj7ArFNrNR56LUcIoq/jXCovLwp0CwZYgKQ1VdS5mwY2GrPoQ=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-l10n/-/kendo-angular-l10n-12.0.0.tgz"
   "version" "12.0.0"
@@ -1585,6 +1585,13 @@
   "version" "12.1.0"
   dependencies:
     "@progress/kendo-angular-schematics" "12.1.0"
+
+"@progress/kendo-angular-schematics@13.0.2":
+  "integrity" "sha512-h+sKmDO0zalQxu3YWhpWtmGUpV1tjvslVrG2NiSVZ/u0z6fhc2kyMnEEN54gvWHDTFOxKS8HvzNS6Zyp1OsDOw=="
+  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-schematics/-/kendo-angular-schematics-13.0.2.tgz"
+  "version" "13.0.2"
+  dependencies:
+    "@progress/kendo-angular-schematics" "13.0.2"
 
 "@progress/kendo-angular-treeview@12.1.0":
   "integrity" "sha512-fCtr6I2rnWlf9HyrDFck8xYy3Kx4NT7Uk5F11ewg/FJhGWEeu85NFxFe+MYu3jTf+PoFreHUZiVXqMsfa50yJw=="
@@ -2371,7 +2378,7 @@
 
 "bi-interfaces@file:../BI-Interfaces/dist/bi-interfaces":
   "resolved" "file:../BI-Interfaces/dist/bi-interfaces"
-  "version" "0.0.0-watch+1684834285119"
+  "version" "0.0.0-watch+1686227102126"
   dependencies:
     "tslib" "^2.3.0"
 

@@ -1,7 +1,7 @@
 <kendo-grid #Grid [filterable]="'menu'" [data]="GridData | async" [pageable]="true"
     [pageSize]="state.take ? state.take : 0" [sortable]="true" [skip]="state.skip? state.skip: 0" [resizable]="true"
     [selectable]="true" [kendoGridReactiveEditing]="createFormGroup" (cellClick)="cellClickHandler($event)"
-     (dataStateChange)="onValueChange($event)" (cellClose)="cellCloseHandler($event)">
+    (dataStateChange)="onValueChange($event)" (cellClose)="cellCloseHandler($event)">
     <ng-container *ngFor="let res of Columns" [ngSwitch]="res.controlType">
 
         <kendo-grid-column *ngSwitchDefault [hidden]="!res.IsVisible" [filter]="res.DataType" [field]="res.Name"
@@ -25,6 +25,19 @@
                 {{ dataItem?.[res.DisplayName] }}
             </ng-template>
         </kendo-grid-column>
+
+
+        <kendo-grid-column *ngSwitchCase="'lookup'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
+            <ng-template kendoGridEditTemplate  let-formGroup="formGroup">
+                <app-bi-lookup [formGroup]="formGroup.get(res.lookupTemplate?.['Key'])"
+                    [DataSource]="res.lookupTemplate?.['DataSource']" [Key]="res.lookupTemplate?.['Key']"
+                    [DomID]="res.lookupTemplate?.['ID']"></app-bi-lookup>
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{ dataItem?.[res.DisplayName] }}
+            </ng-template>
+        </kendo-grid-column>
+
 
     </ng-container>
 </kendo-grid>

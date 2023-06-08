@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CellClickEvent, CellCloseEvent, CreateFormGroupArgs, GridComponent, GridItem, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { State, toODataString } from "@progress/kendo-data-query";
 import { AlertService } from '@full-fledged/alerts';
@@ -13,7 +13,7 @@ import { take } from 'rxjs/operators';
 	templateUrl: './bi-grid.component.html',
 	styleUrls: ['./bi-grid.component.scss']
 })
-export class BIGridComponent implements IGrid, OnInit {
+export class BIGridComponent implements IGrid, OnInit, AfterViewInit {
 	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
 	@Input() GridName!: string;
@@ -39,7 +39,7 @@ export class BIGridComponent implements IGrid, OnInit {
 	) { }
 
 	ngOnInit() {
-		this.DataService.Columns.forEach(res => this.form[res.Name] = [""]);
+		this.DataService.Columns.forEach((res: any) => this.form[res.Name] = [""]);
 		this.GetGridData();
 		this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
 		this.handleFormGroup();
@@ -48,6 +48,9 @@ export class BIGridComponent implements IGrid, OnInit {
 		this.StopSave.next(true);
 	}
 
+	ngAfterViewInit(): void {
+
+	}
 	handleFormGroup() {
 		this.Columns.forEach(res => {
 			if (this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]

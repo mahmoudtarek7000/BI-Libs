@@ -5,7 +5,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
 import { HttpClientModule } from "@angular/common/http";
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagerModule } from '@progress/kendo-angular-pager';
 import { FilterModule } from '@progress/kendo-angular-filter';
 import { BiNavComponent } from './components/BI-Nav/bi-nav.component';
@@ -23,6 +23,7 @@ import { IconsModule } from '@progress/kendo-angular-icons';
 import { SideBarContentComponent } from './components/side-bar-content/side-bar-content.component';
 import { DialogsModule } from "@progress/kendo-angular-dialog";
 import { RouterModule } from '@angular/router';
+import { BILookupComponent } from './components/BI-Lookup/bi-lookup.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RouterModule } from '@angular/router';
     BIGridLayoutComponent,
     BIGridLayoutItemComponent,
     BISideBarComponent,
-    SideBarContentComponent
+    SideBarContentComponent,
+    BILookupComponent
   ],
   imports: [
     BrowserModule,
@@ -48,8 +50,9 @@ import { RouterModule } from '@angular/router';
     LayoutModule,
     ButtonModule,
     DropDownListModule,
-    DialogsModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    DialogsModule
   ],
   exports: [
     BiNavComponent,
@@ -57,7 +60,8 @@ import { RouterModule } from '@angular/router';
     BIGridLayoutComponent,
     BIGridLayoutItemComponent,
     BISideBarComponent,
-    SideBarContentComponent
+    SideBarContentComponent,
+    BILookupComponent
   ]
 })
 export class BIModulesModule { }

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ILookup } from 'bi-interfaces/lib/interfaces/ILookup';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ILookup } from 'bi-interfaces/lib/interfaces/ILookup.interface';
 import { CellClickEvent } from '@progress/kendo-angular-grid';
 import { State, toODataString } from '@progress/kendo-data-query';
 import { IDataSource } from 'bi-interfaces/lib/interfaces/IDataSource';
@@ -9,7 +9,7 @@ import { ModalService } from '../Services/modal.service';
 @Component({
   selector: 'app-bi-lookup',
   templateUrl: './bi-lookup.component.html',
-  styleUrls: ['./bi-lookup.component.css']
+  styleUrls: ['./bi-lookup.component.scss']
 })
 export class BILookupComponent implements OnInit, ILookup {
 
@@ -22,26 +22,27 @@ export class BILookupComponent implements OnInit, ILookup {
   @Output() OnClose = new EventEmitter<any>();
   @Output() OnHover = new EventEmitter<any>();
 
-  @Input() DomID!: string;
+  @Input() DomID: string | undefined;
   @Input() DataSource!: IDataSource;
-  @Input() Key!: string;
+  @Input() Key: string | undefined;
   @Input() Title!: string;
   @Input() Description!: string
   @Input() rtlDescription!: string;
   @Input() IsDisabled: boolean;
+  @Input() lookupValue: any;
+  @Input() formGroup: any;
   Isvalid: boolean;
   SelectedRow: any;
-  lookupValue: any;
   GoToDefinitionURl!: string;
-
+  public opened!: boolean;
   ModalID!: string
   DescriptionText: string;
   gridData!: any[];
-  data: any;
+  data$: any;
   ErrorMsg!: string;
   state: State = { skip: 0, take: 10 };
 
-  constructor(private modal: ModalService) {
+  constructor() {
     this.IsDisabled = false;
     this.Isvalid = true;
     this.DescriptionText = "";
@@ -49,34 +50,42 @@ export class BILookupComponent implements OnInit, ILookup {
   OnInputFocus() {
     this.OnFocus.emit(null);
   }
-  OpenModal() {
-    this.OnOpen.emit(null);
-    this.getLookupData();
-    this.modal.open(this.ModalID);
-  }
-  getLookupData(filter: any = null) {
-    this.DataSource.read(filter == null ? `$skip=${this.state.skip}&$top=10&$count=true` : filter);
-    this.data = this.DataSource;
-    this.data.subscribe((res: any) => {
-      this.gridData = res.data;
-      console.log(res);
 
-    });
+  public CloseModal(): void {
+    this.opened = false;
+    this.OnClose.emit(null);
+  }
+
+  OpenModal() {
+    this.opened = true;
+    this.getLookupData();
+    this.OnOpen.emit(null);
+  }
+
+  getLookupData(filter: any = null) {
+    this.DataSource?.read(filter == null ? `$skip=${this.state.skip}&$top=10&$count=true` : filter);
     this.AfterLoad.emit(this.gridData);
   }
+
   ngOnInit(): void {
+    this.data$ = this.DataSource;
+    this.data$?.subscribe((res: any) => {
+      this.gridData = res.data;
+      if (!this.opened && this.gridData) {
+        if (this.gridData.length) {
+          this.ClearError();
+          this.ReturnedValueEmitter.emit(this.gridData[0]);
+        }
+        else this.SetError("Error")
+      }
+    });
     this.BeforeLoad.emit(null);
     this.ModalID = this.Key + '_' + this.DomID;
   }
+
   cellClickHandler(args: CellClickEvent) {
     this.SelectedRow = args.dataItem;
-    this.lookupValue = args.dataItem[this.Key];
-    this.OnEnterGrid.emit(this.SelectedRow);
     this.ClearError();
-  }
-  CloseModal() {
-    this.OnClose.emit(null);
-    this.modal.close(this.ModalID);
   }
   OnInputHover() {
     this.DescriptionText = this.SelectedRow ? this.SelectedRow[this.Description] : "";
@@ -99,9 +108,10 @@ export class BILookupComponent implements OnInit, ILookup {
     this.Isvalid = true;
     this.ErrorMsg = '';
   }
-  Save() {
+  Ok() {
     if (this.SelectedRow) {
       this.CloseModal();
+      if (this.Key) this.formGroup.patchValue(this.SelectedRow[this.Key]);
       this.ReturnedValueEmitter.emit(this.SelectedRow);
     }
   }
@@ -109,22 +119,13 @@ export class BILookupComponent implements OnInit, ILookup {
     this.CloseModal();
   }
   dblClickEvent() {
-    this.Save();
+    this.Ok();
   }
   async OnTextChange(event: any): Promise<void> {
     var EnteredValue = event.target.value;
-    this.DataSource.read("$filter=" + this.DataSource.Key + " eq '" + EnteredValue);
-    this.data = this.DataSource;
-    this.data.subscribe((res: any) => {
-      this.gridData = res;
-    });
-    if (this.gridData && this.gridData.length > 0) {
-      this.ClearError();
-      this.ReturnedValueEmitter.emit(this.gridData[0]);
-    }
-    else {
-      this.SetError(`can't find ${this.Key} with value = ${EnteredValue}`);
-    }
+    if (!event.target.value) return;
+    this.DataSource.read("$filter=" + this.DataSource.Key + " eq '" + EnteredValue + "'");
+
   }
   showContextMenu(e: any) {
   }
