@@ -2376,8 +2376,8 @@
   "resolved" "https://registry.npmjs.org/batch/-/batch-0.6.1.tgz"
   "version" "0.6.1"
 
-"bi-interfaces@file:../BI-Interfaces/dist/bi-interfaces":
-  "resolved" "file:../BI-Interfaces/dist/bi-interfaces"
+"bi-interfaces@file:../../../source/repos/SalesBuzz/SalesBuzz.Presentation/ClientApp/dist-interface/bi-interfaces":
+  "resolved" "file:../../../source/repos/SalesBuzz/SalesBuzz.Presentation/ClientApp/dist-interface/bi-interfaces"
   "version" "0.0.0-watch+1686227102126"
   dependencies:
     "tslib" "^2.3.0"
