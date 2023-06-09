@@ -11,8 +11,6 @@ import { FilterModule } from '@progress/kendo-angular-filter';
 import { BiNavComponent } from './components/BI-Nav/bi-nav.component';
 import { AlertModule } from '@full-fledged/alerts';
 import { ButtonModule } from '@progress/kendo-angular-buttons';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { CommonModule } from '@angular/common';
@@ -36,12 +34,9 @@ import { BILookupComponent } from './components/BI-Lookup/bi-lookup.component';
     BILookupComponent
   ],
   imports: [
-    BrowserModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionY: "top" }),
     IconsModule,
-    BrowserAnimationsModule,
     DateInputsModule,
-    BrowserAnimationsModule,
     GridModule,
     HttpClientModule,
     ReactiveFormsModule,
