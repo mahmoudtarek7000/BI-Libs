@@ -8,6 +8,8 @@
         <kendo-grid-column *ngSwitchDefault [hidden]="!res.IsVisible" [filter]="res.DataType" [field]="res.Name"
             [title]="res.DisplayName" [editor]="res.DataType" [width]="200">
         </kendo-grid-column>
+        <div>error</div>
+        <div *ngIf="!CurrentSelectRow?.get(res.Name)?.valid">error</div>
 
         <kendo-grid-column *ngSwitchCase="'boolean'" [hidden]="!res.IsVisible" [filter]="res.DataType"
             [field]="res.Name" [title]="res.DisplayName">
@@ -23,19 +25,19 @@
                 </kendo-dropdownlist>
             </ng-template>
             <ng-template kendoGridCellTemplate let-dataItem>
-                {{ dataItem?.[res.DisplayName] }}
+                {{ dataItem?.[res.Name] }}
             </ng-template>
         </kendo-grid-column>
 
 
         <kendo-grid-column *ngSwitchCase="'lookup'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
             <ng-template kendoGridEditTemplate  let-formGroup="formGroup">
-                <app-bi-lookup [formGroup]="formGroup.get(res.lookupTemplate?.['Key'])"
+                <app-bi-lookup [formGroup]="formGroup.get(res.Name)"
                     [DataSource]="res.lookupTemplate?.['DataSource']" [Key]="res.lookupTemplate?.['Key']"
                     [DomID]="res.lookupTemplate?.['ID']"></app-bi-lookup>
             </ng-template>
             <ng-template kendoGridCellTemplate let-dataItem>
-                {{ dataItem?.[res.DisplayName] }}
+                {{ dataItem?.[res.Name] }}
             </ng-template>
         </kendo-grid-column>
     </ng-container>
