@@ -36,9 +36,10 @@
     "@progress/kendo-licensing": "^1.3.0",
     "@progress/kendo-svg-icons": "^1.0.0",
     "@progress/kendo-theme-default": "^6.3.0",
-    "bi-interfaces": "file:../../../source/repos/SalesBuzz/SalesBuzz.Presentation/ClientApp/dist-interface/bi-interfaces",
+    "bi-interfaces": "file:../BI-Interfaces/dist/bi-interfaces",
     "bootstrap": "^5.2.3",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.7.5",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

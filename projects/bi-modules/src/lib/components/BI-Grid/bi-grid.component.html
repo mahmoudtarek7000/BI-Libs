@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../../../../../../node_modules/sweetalert2/src/sweetalert2.scss">
 <kendo-grid #Grid [filterable]="'menu'" [data]="GridData | async" [pageable]="true"
     [pageSize]="state.take ? state.take : 0" [sortable]="true" [skip]="state.skip? state.skip: 0" [resizable]="true"
     [selectable]="true" [kendoGridReactiveEditing]="createFormGroup" (cellClick)="cellClickHandler($event)"
@@ -37,7 +38,5 @@
                 {{ dataItem?.[res.DisplayName] }}
             </ng-template>
         </kendo-grid-column>
-
-
     </ng-container>
 </kendo-grid>
