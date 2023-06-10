@@ -35,6 +35,7 @@ export class BIGridComponent implements IGrid, OnInit {
 	dataItemReset!: any;
 	data: any;
 	newForm: any = {};
+	newAdd!: string;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -107,6 +108,7 @@ export class BIGridComponent implements IGrid, OnInit {
 	AddRow() {
 		if (isNaN(this.rowIndex) || !this.CurrentSelectRow.dirty) {
 			this.Cancel("Add");
+			this.newAdd = "Add";
 			this.Mygrid.addRow(this.createFormGroup(this.newForm));
 		} else {
 			Swal.fire({
@@ -130,21 +132,21 @@ export class BIGridComponent implements IGrid, OnInit {
 		})
 	};
 
-	public cellClickHandler(args: CellClickEvent): void {
+	insertDataItemInRow(args: any) {
 		this.dataItem = args.dataItem;
-		this.CellClick.emit(args);
-		if (isNaN(this.rowIndex) && !this.CurrentSelectRow.dirty) {
+			this.CellClick.emit(args);
 			args.sender.editCell(
 				args.rowIndex,
 				args.columnIndex,
 				this.createFormGroup(args)
 			);
-		} else if (this.rowIndex == args.rowIndex || !this.CurrentSelectRow.dirty) {
-			args.sender.editCell(
-				args.rowIndex,
-				args.columnIndex,
-				this.createFormGroup(args)
-			);
+	}
+
+	public cellClickHandler(args: CellClickEvent): void {
+		if (this.newAdd !== "Add" && isNaN(this.rowIndex) && !this.CurrentSelectRow.dirty) {
+			this.insertDataItemInRow(args);
+		} else if (this.newAdd !== "Add" && (this.rowIndex == args.rowIndex || !this.CurrentSelectRow.dirty)) {
+			this.insertDataItemInRow(args);
 		} else {
 			Swal.fire({
 				title: 'Please save the changes',
@@ -167,6 +169,7 @@ export class BIGridComponent implements IGrid, OnInit {
 		this.dataItem = undefined;
 		this.dataItemReset = undefined;
 		this.rowIndex = undefined;
+		this.newAdd = "";
 	}
 
 	async Save() {
@@ -182,6 +185,7 @@ export class BIGridComponent implements IGrid, OnInit {
 							this.Mygrid.closeRow();
 							this.handleFormGroup();
 							this.alertService.success("Saved Successfully");
+							this.newAdd = "";
 						});
 					};
 				} else {
