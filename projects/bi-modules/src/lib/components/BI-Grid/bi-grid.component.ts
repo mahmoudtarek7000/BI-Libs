@@ -134,12 +134,12 @@ export class BIGridComponent implements IGrid, OnInit {
 
 	insertDataItemInRow(args: any) {
 		this.dataItem = args.dataItem;
-			this.CellClick.emit(args);
-			args.sender.editCell(
-				args.rowIndex,
-				args.columnIndex,
-				this.createFormGroup(args)
-			);
+		this.CellClick.emit(args);
+		args.sender.editCell(
+			args.rowIndex,
+			args.columnIndex,
+			this.createFormGroup(args)
+		);
 	}
 
 	public cellClickHandler(args: CellClickEvent): void {
@@ -183,6 +183,7 @@ export class BIGridComponent implements IGrid, OnInit {
 						this.DataService.add(this.CurrentSelectRow.getRawValue()).subscribe((res: any) => {
 							this.data['data'].unshift(this.CurrentSelectRow.getRawValue());
 							this.Mygrid.closeRow();
+							this.CurrentSelectRow.reset();
 							this.handleFormGroup();
 							this.alertService.success("Saved Successfully");
 							this.newAdd = "";
@@ -194,6 +195,7 @@ export class BIGridComponent implements IGrid, OnInit {
 						this.DataService.edit(this.CurrentSelectRow.getRawValue(), this.CurrentSelectRow.getRawValue()[this.DataService.Key]).subscribe((res: any) => {
 							this.Mygrid.closeRow(this.rowIndex);
 							this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
+							this.CurrentSelectRow.reset();
 							this.handleFormGroup();
 							this.alertService.success("Saved Successfully");
 						});
