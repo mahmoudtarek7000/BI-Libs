@@ -14,8 +14,8 @@ kendo-drawer-container {
     background-color: #F9FAFC;
   }
 
-  .k-drawer-item:hover,
-  .k-selected {
+  ::ng-deep .k-drawer-item:hover,
+  ::ng-deep .k-selected {
     background-color: #3688FC !important;
     color: #ffff;
 
@@ -27,8 +27,8 @@ kendo-drawer-container {
   &.k-drawer-mini {
 
     // Background color when collapsed
-    .k-drawer-item:hover,
-    .k-selected {
+    ::ng-deep .k-drawer-item:hover,
+    ::ng-deep .k-selected {
       background-color: #ffff !important;
       color: #3688FC;
 
