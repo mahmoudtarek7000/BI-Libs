@@ -2378,7 +2378,7 @@
 
 "bi-interfaces@file:../BI-Interfaces/dist/bi-interfaces":
   "resolved" "file:../BI-Interfaces/dist/bi-interfaces"
-  "version" "0.0.0-watch+1686404133011"
+  "version" "0.0.0-watch+1686557087277"
   dependencies:
     "tslib" "^2.3.0"
 
