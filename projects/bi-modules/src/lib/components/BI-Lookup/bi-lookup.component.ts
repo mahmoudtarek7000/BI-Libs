@@ -31,7 +31,7 @@ export class BILookupComponent implements OnInit, ILookup {
   @Input() rtlDescription!: string;
   @Input() IsDisabled: boolean;
   @Input() lookupValue: any;
-  @Input() FormControl!: FormControl;
+  @Input() FormControl!: any;
   Isvalid: boolean;
   SelectedRow: any;
   GoToDefinitionURl!: string;
@@ -129,6 +129,7 @@ export class BILookupComponent implements OnInit, ILookup {
   }
   async OnTextChange(event: any): Promise<void> {
     var EnteredValue = event.target.value;
+    this.FormControl.patchValue(event.target.value);
     if (!event.target.value) return;
     this.DataSource.read("$filter=" + this.DataSource.Key + " eq '" + EnteredValue + "'");
   }

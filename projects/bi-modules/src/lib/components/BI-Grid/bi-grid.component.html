@@ -4,11 +4,31 @@
     [selectable]="true" [kendoGridReactiveEditing]="createFormGroup" (cellClick)="cellClickHandler($event)"
     (dataStateChange)="onValueChange($event)" (cellClose)="cellCloseHandler($event)">
     <ng-container *ngFor="let res of Columns" [ngSwitch]="res.controlType">
-        <kendo-grid-column *ngSwitchCase="'text'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
+        <kendo-grid-column [hidden]="!res.IsVisible" *ngSwitchCase="'text'" [field]="res.Name" [title]="res.DisplayName"
+            [width]="150">
             <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
-                <kendo-textbox [formControl]="formGroup.get(res.Name)"></kendo-textbox>
-                <span class="text-danger"
-                    *ngIf="submitted && formGroup.get(res.Name).errors?.required">
+                <kendo-textbox [formControl]="formGroup.controls[res.Name]" [value]="DefaultValueForm[res.Name]"
+                    (change)="bindingData($event, res.Name)"></kendo-textbox>
+                <span *ngIf="submitted && formGroup.get(res.Name).invalid">
+                    <span class="text-danger" *ngIf="formGroup.get(res.Name).errors?.required">
+                        {{res.DisplayName}} is required
+                    </span>
+                    <span class="text-danger" *ngIf="formGroup.get(res.Name).errors?.email">
+                        Email address is invalid
+                    </span>
+                </span>
+            </ng-template>
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{ dataItem?.[res.Name] }}
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [hidden]="!res.IsVisible" *ngSwitchCase="'numeric'" [field]="res.Name"
+            [title]="res.DisplayName" [width]="150">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+                <input [formControl]="formGroup.controls[res.Name]" type="number" class="form-control"
+                    [value]="DefaultValueForm[res.Name]" (change)="bindingData($event, res.Name)">
+                <span class="text-danger" *ngIf="submitted && formGroup.get(res.Name).errors?.required">
                     {{res.DisplayName}} is required
                 </span>
             </ng-template>
@@ -17,11 +37,12 @@
             </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column *ngSwitchCase="'numeric'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
+        <kendo-grid-column [hidden]="!res.IsVisible" *ngSwitchCase="'date'" [field]="res.Name" [title]="res.DisplayName"
+            [width]="150">
             <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
-                <input [formControl]="formGroup.get(res.Name)" type="number" class="form-control">
-                <span class="text-danger"
-                    *ngIf="submitted && formGroup.get(res.Name).errors?.required">
+                <kendo-datepicker [formControl]="formGroup.controls[res.Name]" [value]="DefaultValueForm[res.Name]"
+                    (change)="bindingData($event, res.Name)" calendarType="classic"></kendo-datepicker>
+                <span class="text-danger" *ngIf="submitted && formGroup.get(res.Name).errors?.required">
                     {{res.DisplayName}} is required
                 </span>
             </ng-template>
@@ -30,33 +51,21 @@
             </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column *ngSwitchCase="'date'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
-            <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
-                <kendo-datepicker [formControl]="formGroup.get(res.Name)" calendarType="classic"></kendo-datepicker>
-                <span class="text-danger"
-                    *ngIf="submitted && formGroup.get(res.Name).errors?.required">
-                    {{res.DisplayName}} is required
-                </span>
-            </ng-template>
-            <ng-template kendoGridCellTemplate let-dataItem>
-                {{ dataItem?.[res.Name] }}
-            </ng-template>
-        </kendo-grid-column>
-
-        <kendo-grid-column *ngSwitchCase="'boolean'" [hidden]="!res.IsVisible" [filter]="res.DataType"
-            [field]="res.Name" [title]="res.DisplayName">
+        <kendo-grid-column [hidden]="!res.IsVisible" *ngSwitchCase="'boolean'" [hidden]="!res.IsVisible"
+            [filter]="res.DataType" [field]="res.Name" [title]="res.DisplayName">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <input type="checkbox" [checked]="dataItem[res.Name]" />
             </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column *ngSwitchCase="'select'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
+        <kendo-grid-column [hidden]="!res.IsVisible" *ngSwitchCase="'select'" [field]="res.Name"
+            [title]="res.DisplayName" [width]="150">
             <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
                 <kendo-dropdownlist [data]="['categories', 'test']" textField="CategoryName" valueField="CategoryID"
-                    [valuePrimitive]="true" [formControl]="formGroup.get(res.Name)">
+                    [valuePrimitive]="true" [formControl]="formGroup.controls[res.Name]"
+                    [value]="DefaultValueForm[res.Name]" (change)="bindingData($event, res.Name)">
                 </kendo-dropdownlist>
-                <span class="text-danger"
-                    *ngIf="submitted && formGroup.get(res.Name).errors?.required">
+                <span class="text-danger" *ngIf="submitted && formGroup.get(res.Name).errors?.required">
                     {{res.DisplayName}} is required
                 </span>
             </ng-template>
@@ -66,12 +75,13 @@
         </kendo-grid-column>
 
 
-        <kendo-grid-column *ngSwitchCase="'lookup'" [field]="res.Name" [title]="res.DisplayName" [width]="150">
+        <kendo-grid-column [hidden]="!res.IsVisible" *ngSwitchCase="'lookup'" [field]="res.Name"
+            [title]="res.DisplayName" [width]="150">
             <ng-template kendoGridEditTemplate let-formGroup="formGroup">
-                <app-bi-lookup [FormControl]="formGroup.get(res.Name)" [DataSource]="res.lookupTemplate?.['DataSource']"
-                    [Key]="res.lookupTemplate?.['Key']" [DomID]="res.lookupTemplate?.['ID']"></app-bi-lookup>
-                <span class="text-danger"
-                    *ngIf="submitted && formGroup.get(res.Name).errors?.required">
+                <app-bi-lookup [FormControl]="formGroup.controls[res.Name]"
+                    [DataSource]="res.lookupTemplate?.['DataSource']" [Key]="res.lookupTemplate?.['Key']"
+                    [DomID]="res.lookupTemplate?.['ID']"></app-bi-lookup>
+                <span class="text-danger" *ngIf="submitted && formGroup.get(res.Name).errors?.required">
                     {{res.DisplayName}} is required
                 </span>
             </ng-template>

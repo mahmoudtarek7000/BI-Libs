@@ -42,7 +42,9 @@ export class BiNavComponent implements INav {
    * @return void
    */
   Save(): void {
-    this.BIGrid.Save();
+    if(this.BIGrid.CurrentSelectRow.dirty) {
+      this.BIGrid.Save();
+    }
   };
 
   /**

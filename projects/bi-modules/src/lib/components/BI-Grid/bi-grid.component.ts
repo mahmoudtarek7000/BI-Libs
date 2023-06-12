@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 	templateUrl: './bi-grid.component.html',
 	styleUrls: ['./bi-grid.component.scss']
 })
-export class BIGridComponent implements  OnInit {
+export class BIGridComponent implements OnInit {
 	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
 	@Input() GridName!: string;
@@ -27,6 +27,7 @@ export class BIGridComponent implements  OnInit {
 	CreatedItemArray: Array<Object> = [];
 	UpdatedItemArray: Array<Object> = [];
 	form: any = {};
+	DefaultValueForm: any = {};
 	CurrentSelectRow!: FormGroup;
 	GridData!: any;
 	state: State = { skip: 0, take: 10 };
@@ -58,14 +59,21 @@ export class BIGridComponent implements  OnInit {
 
 	handleFormGroup() {
 		this.Columns.forEach(res => {
-			if (this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators]
+			if (this.form.hasOwnProperty(res.Name)) this.form[res.Name] = [{ value: res.DefaultValue, disabled: !res.IsEditable }, res.Validators];
+			this.DefaultValueForm[res.Name] = res.DefaultValue;
 		});
 		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
 		this.CurrentSelectRow.valueChanges.subscribe(res => {
 			if (this.dataItem) {
 				Object.assign(this.dataItem, res);
+			} else {
+				Object.assign(this.DefaultValueForm, res);
 			}
 		})
+	}
+
+	bindingData(event: any, name: string) {
+		this.CurrentSelectRow.patchValue({ [name]: event.target.value })
 	}
 
 	createFormGroup(args: CreateFormGroupArgs | any): FormGroup {
@@ -110,7 +118,7 @@ export class BIGridComponent implements  OnInit {
 		if (isNaN(this.rowIndex) || !this.CurrentSelectRow.dirty) {
 			this.Cancel("Add");
 			this.newAdd = "Add";
-			this.Mygrid.addRow(this.createFormGroup(this.newForm));
+			this.Mygrid.addRow(this.createFormGroup(this.DefaultValueForm));
 		} else {
 			Swal.fire({
 				title: 'Please save the changes',
@@ -119,6 +127,10 @@ export class BIGridComponent implements  OnInit {
 				cancelButtonText: 'Ok',
 			})
 		}
+	}
+
+	dataBinding(e: any, name: string) {
+		this.CurrentSelectRow.patchValue({ [name]: e.target.value });
 	}
 
 	async DeleteRow() {
