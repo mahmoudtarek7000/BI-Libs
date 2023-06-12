@@ -1,5 +1,5 @@
 <div class="input-group px-0 mt-2 mb-3 col-12" style="position:relative;">
-  <input type="text" class="form-control" [formControl]="FormControl" [title]="DescriptionText"
+  <input type="text" class="form-control" [formControl]="BindingProperty" [title]="DescriptionText"
     [ngClass]="{'error': !Isvalid} " [placeholder]="'Placeholder'" (change)="OnTextChange($event)"
     (mouseover)="OnInputHover()" (focus)="OnInputFocus()">
   <div class="input-group-append">

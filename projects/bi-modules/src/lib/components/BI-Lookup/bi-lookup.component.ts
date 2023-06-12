@@ -30,8 +30,7 @@ export class BILookupComponent implements OnInit, ILookup {
   @Input() Description!: string
   @Input() rtlDescription!: string;
   @Input() IsDisabled: boolean;
-  @Input() lookupValue: any;
-  @Input() FormControl!: FormControl;
+  @Input() BindingProperty!: FormControl;
   Isvalid: boolean;
   SelectedRow: any;
   GoToDefinitionURl!: string;
@@ -77,11 +76,12 @@ export class BILookupComponent implements OnInit, ILookup {
           this.ClearError();
           this.ReturnedValueEmitter.emit(this.gridData[0]);
           this.SelectedRow = this.gridData[0];
-          this.FormControl.setErrors(null);
+          this.BindingProperty.setErrors(null);
         }
         else {
           this.SetError(`can't find ${this.Key} with entered value `)
-          this.FormControl.setErrors({ isNotValidValue: true })
+          this.BindingProperty.setErrors({ isNotValidValue: true })
+          console.log(this.BindingProperty);
         }
       }
     });
@@ -117,7 +117,7 @@ export class BILookupComponent implements OnInit, ILookup {
   Ok() {
     if (this.SelectedRow) {
       this.CloseModal();
-      if (this.Key) this.FormControl.patchValue(this.SelectedRow[this.Key]);
+      if (this.Key) this.BindingProperty.patchValue(this.SelectedRow[this.Key]);
       this.ReturnedValueEmitter.emit(this.SelectedRow);
     }
   }
