@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 	templateUrl: './bi-grid.component.html',
 	styleUrls: ['./bi-grid.component.scss']
 })
-export class BIGridComponent implements IGrid, OnInit {
+export class BIGridComponent implements  OnInit {
 	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
 	@Input() GridName!: string;
