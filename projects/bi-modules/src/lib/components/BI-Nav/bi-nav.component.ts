@@ -14,6 +14,7 @@ export class BiNavComponent implements INav {
   opened: boolean = false;
   constructor() {
   }
+  DomID: string | undefined;
 
   /**
    * add new row to the grid

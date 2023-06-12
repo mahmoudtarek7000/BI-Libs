@@ -4,6 +4,7 @@ import { CellClickEvent } from '@progress/kendo-angular-grid';
 import { State, toODataString } from '@progress/kendo-data-query';
 import { IDataSource } from 'bi-interfaces/lib/interfaces/IDataSource';
 import { ModalService } from '../Services/modal.service';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class BILookupComponent implements OnInit, ILookup {
   @Input() rtlDescription!: string;
   @Input() IsDisabled: boolean;
   @Input() lookupValue: any;
-  @Input() formGroup: any;
+  @Input() FormControl!: FormControl;
   Isvalid: boolean;
   SelectedRow: any;
   GoToDefinitionURl!: string;
@@ -75,8 +76,13 @@ export class BILookupComponent implements OnInit, ILookup {
         if (this.gridData.length) {
           this.ClearError();
           this.ReturnedValueEmitter.emit(this.gridData[0]);
+          this.SelectedRow = this.gridData[0];
+          this.FormControl.setErrors(null);
         }
-        else this.SetError("Error")
+        else {
+          this.SetError(`can't find ${this.Key} with entered value `)
+          this.FormControl.setErrors({msg:this.ErrorMsg})
+        }
       }
     });
     this.BeforeLoad.emit(null);
@@ -111,7 +117,7 @@ export class BILookupComponent implements OnInit, ILookup {
   Ok() {
     if (this.SelectedRow) {
       this.CloseModal();
-      if (this.Key) this.formGroup.patchValue(this.SelectedRow[this.Key]);
+      if (this.Key) this.FormControl.patchValue(this.SelectedRow[this.Key]);
       this.ReturnedValueEmitter.emit(this.SelectedRow);
     }
   }
@@ -125,7 +131,6 @@ export class BILookupComponent implements OnInit, ILookup {
     var EnteredValue = event.target.value;
     if (!event.target.value) return;
     this.DataSource.read("$filter=" + this.DataSource.Key + " eq '" + EnteredValue + "'");
-
   }
   showContextMenu(e: any) {
   }
