@@ -22,6 +22,7 @@ import { SideBarContentComponent } from './components/side-bar-content/side-bar-
 import { DialogsModule } from "@progress/kendo-angular-dialog";
 import { RouterModule } from '@angular/router';
 import { BILookupComponent } from './components/BI-Lookup/bi-lookup.component';
+import { InputsModule, NumericTextBoxModule } from '@progress/kendo-angular-inputs';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import { BILookupComponent } from './components/BI-Lookup/bi-lookup.component';
     DropDownListModule,
     RouterModule,
     FormsModule,
-    DialogsModule
+    DialogsModule,
+    InputsModule,
+    NumericTextBoxModule
   ],
   exports: [
     BiNavComponent,

@@ -1423,7 +1423,7 @@
     "@progress/kendo-date-math" "^1.1.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-dialog@^13.0.2", "@progress/kendo-angular-dialog@12.0.1":
+"@progress/kendo-angular-dialog@^13.0.2", "@progress/kendo-angular-dialog@13.0.2":
   "integrity" "sha512-1lIlLyMvjHvz3syULgUoDoP1acScHYtJfeDf3XXO/teK698oEUVCkxP+k2SknE1Yq7NBlzJd9Y+9fJbp/OQqRQ=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-dialog/-/kendo-angular-dialog-13.0.2.tgz"
   "version" "13.0.2"
@@ -1478,18 +1478,18 @@
     "@progress/kendo-angular-schematics" "12.0.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-inputs@12.0.0", "@progress/kendo-angular-inputs@12.0.1", "@progress/kendo-angular-inputs@12.1.0":
-  "integrity" "sha512-Opz8zXZUg+M+cfe6vT0wHktsGJZKbzwlAEr/cPrD6euklJTYoeq8syA/GG8hvJinwltJZ0XQCHOe19rRn5I2RQ=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-inputs/-/kendo-angular-inputs-12.0.1.tgz"
-  "version" "12.0.1"
+"@progress/kendo-angular-inputs@^13.0.2", "@progress/kendo-angular-inputs@12.0.0", "@progress/kendo-angular-inputs@12.0.1", "@progress/kendo-angular-inputs@12.1.0":
+  "integrity" "sha512-scr6Ca3xB222MD9Vh5JtZ7nU5wM1em1BCKhSPyWksFKaonlzbcohs28oeyGLXI1jr/kgxS5psbFnx2k+97DLsw=="
+  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-inputs/-/kendo-angular-inputs-13.0.2.tgz"
+  "version" "13.0.2"
   dependencies:
-    "@progress/kendo-angular-schematics" "12.0.1"
+    "@progress/kendo-angular-schematics" "13.0.2"
     "@progress/kendo-common" "^0.2.2"
     "@progress/kendo-draggable" "^3.0.0"
     "@progress/kendo-inputs-common" "^3.1.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-intl@12.0.1":
+"@progress/kendo-angular-intl@12.0.1", "@progress/kendo-angular-intl@13.0.2":
   "integrity" "sha512-QOLPNgwd5LjXE96oKFu+rtvIntpvCxuqSXFguZ5a1Y5ix1v7NuaFNdawrRmgeSuSWAfQbUr30QTk74YhYpCOEA=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-intl/-/kendo-angular-intl-12.0.1.tgz"
   "version" "12.0.1"
@@ -1548,7 +1548,7 @@
     "@progress/kendo-file-saver" "^1.0.1"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-popup@12.0.0", "@progress/kendo-angular-popup@12.0.1", "@progress/kendo-angular-popup@12.1.0":
+"@progress/kendo-angular-popup@12.0.0", "@progress/kendo-angular-popup@12.0.1", "@progress/kendo-angular-popup@12.1.0", "@progress/kendo-angular-popup@13.0.2":
   "integrity" "sha512-J/Q38kontmoWde4j91378CkKkh6tC+p2/fjZipAHRRkmVp2RPpxXRseTR9FN7PYQPceZizabZfSOIjAewusCkg=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-angular-popup/-/kendo-angular-popup-12.0.0.tgz"
   "version" "12.0.0"
@@ -1557,12 +1557,12 @@
     "@progress/kendo-popup-common" "^1.7.0"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-progressbar@12.0.1", "@progress/kendo-angular-progressbar@12.1.0":
-  "integrity" "sha512-SqjhYqSOeJNPSay9hlXieqSQY4CVSDfSozdB02Dyn8iWe3H3pWFTSnOKRTtu0DypufnQf6hFAjil4AGsy4W++w=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-progressbar/-/kendo-angular-progressbar-12.0.1.tgz"
-  "version" "12.0.1"
+"@progress/kendo-angular-progressbar@12.1.0", "@progress/kendo-angular-progressbar@13.0.2":
+  "integrity" "sha512-kSbQH0wpHkicWSxfUMPgHenGghfIbgVEAzg4Z3r8QYS1YS5WD+XlAQF4M/NQ6bQMcLqHPCNgAK8+9yTNNHz0qw=="
+  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-progressbar/-/kendo-angular-progressbar-13.0.2.tgz"
+  "version" "13.0.2"
   dependencies:
-    "@progress/kendo-angular-schematics" "12.0.1"
+    "@progress/kendo-angular-schematics" "13.0.2"
     "tslib" "^2.3.1"
 
 "@progress/kendo-angular-schematics@12.0.0":
@@ -1603,12 +1603,12 @@
     "@progress/kendo-draggable" "^3.0.2"
     "tslib" "^2.3.1"
 
-"@progress/kendo-angular-upload@12.0.1":
-  "integrity" "sha512-3MykuD11vkt2jRa/rqkv++Mh7Xg1IYZc13lYKbAUQLnJqP49pctH8xcJTgqBspH1Qs0XVK5rYvkyIeC38DBI/g=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-upload/-/kendo-angular-upload-12.0.1.tgz"
-  "version" "12.0.1"
+"@progress/kendo-angular-upload@13.0.2":
+  "integrity" "sha512-wtkFPT8ABEg/naFSyTo8ujk+heNcSf7A1uX004kY7jUzKCOcY17JWH9qPOr/ltae/ZjUjQs3UlBsGGqKVAbQJg=="
+  "resolved" "https://registry.npmjs.org/@progress/kendo-angular-upload/-/kendo-angular-upload-13.0.2.tgz"
+  "version" "13.0.2"
   dependencies:
-    "@progress/kendo-angular-schematics" "12.0.1"
+    "@progress/kendo-angular-schematics" "13.0.2"
     "tslib" "^2.3.1"
 
 "@progress/kendo-angular-utils@12.0.1":
@@ -2378,7 +2378,7 @@
 
 "bi-interfaces@file:../BI-Interfaces/dist/bi-interfaces":
   "resolved" "file:../BI-Interfaces/dist/bi-interfaces"
-  "version" "0.0.0-watch+1686404133011"
+  "version" "0.0.0-watch+1686555829691"
   dependencies:
     "tslib" "^2.3.0"
 

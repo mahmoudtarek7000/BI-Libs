@@ -7,7 +7,7 @@ import { IColumns } from 'bi-interfaces/lib/interfaces/IColumns.interface';
 import { IDataSource } from 'bi-interfaces/lib/interfaces/IDataSource';
 import { IGrid } from 'bi-interfaces/lib/interfaces/IGrid';
 import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -31,11 +31,12 @@ export class BIGridComponent implements IGrid, OnInit {
 	GridData!: any;
 	state: State = { skip: 0, take: 10 };
 	rowIndex!: any;
-	dataItem!: any;
+	dataItem: any = {};
 	dataItemReset!: any;
 	data: any;
 	newForm: any = {};
 	newAdd!: string;
+	submitted: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -61,6 +62,8 @@ export class BIGridComponent implements IGrid, OnInit {
 		});
 		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
 		this.CurrentSelectRow.valueChanges.subscribe(res => {
+			console.log(this.CurrentSelectRow);
+			
 			if (this.dataItem) {
 				Object.assign(this.dataItem, res);
 			}
@@ -69,7 +72,7 @@ export class BIGridComponent implements IGrid, OnInit {
 
 	createFormGroup(args: CreateFormGroupArgs | any): FormGroup {
 		this.rowIndex = args.rowIndex;
-		const item = args.dataItem;
+		const item = args.dataItem ? args.dataItem : args;
 		this.dataItemReset = { ...args.dataItem };
 		this.CurrentSelectRow.patchValue(item);
 		return this.CurrentSelectRow;
@@ -115,21 +118,30 @@ export class BIGridComponent implements IGrid, OnInit {
 				title: 'Please save the changes',
 				icon: 'warning',
 				showCloseButton: true,
-				cancelButtonText: 'Cancel',
+				cancelButtonText: 'Ok',
 			})
 		}
 	}
 
 	async DeleteRow() {
-		await this.BeforeActionDelete();
-		this.StopDelete?.pipe(take(1)).subscribe((res: any) => {
-			if (res) {
-				this.DataService.delete(this.dataItem[this.DataService.Key]).subscribe((res: any) => {
-					this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
-					this.alertService.success("Deleted Successfully");
-				});
-			}
-		})
+		if (this.dataItem) {
+			await this.BeforeActionDelete();
+			this.StopDelete?.pipe(take(1)).subscribe((res: any) => {
+				if (res) {
+					this.DataService.delete(this.dataItem[this.DataService.Key]).subscribe((res: any) => {
+						this.DataService.read(`$skip=${this.state.skip}&$top=10&$count=true`);
+						this.alertService.success("Deleted Successfully");
+					});
+				}
+			})
+		} else {
+			Swal.fire({
+				title: 'Please select line',
+				icon: 'warning',
+				showCloseButton: true,
+				cancelButtonText: 'Ok',
+			})
+		}
 	};
 
 	insertDataItemInRow(args: any) {
@@ -152,7 +164,7 @@ export class BIGridComponent implements IGrid, OnInit {
 				title: 'Please save the changes',
 				icon: 'warning',
 				showCloseButton: true,
-				cancelButtonText: 'Cancel',
+				cancelButtonText: 'Ok',
 			})
 		}
 	}
@@ -170,11 +182,13 @@ export class BIGridComponent implements IGrid, OnInit {
 		this.dataItemReset = undefined;
 		this.rowIndex = undefined;
 		this.newAdd = "";
+		this.submitted = false;
 	}
 
 	async Save() {
 		if (!this.dataItem) this.CreatedItemArray.push({ ...this.createFormGroup(this.newForm).value });
 		await this.BeforeActionSave();
+		this.submitted = true;
 		this.StopSave?.pipe(take(1)).subscribe((res: any) => {
 			if (res) {
 				if (isNaN(this.rowIndex)) {
@@ -187,6 +201,7 @@ export class BIGridComponent implements IGrid, OnInit {
 							this.handleFormGroup();
 							this.alertService.success("Saved Successfully");
 							this.newAdd = "";
+							this.submitted = false;
 						});
 					};
 				} else {
@@ -198,6 +213,7 @@ export class BIGridComponent implements IGrid, OnInit {
 							this.CurrentSelectRow.reset();
 							this.handleFormGroup();
 							this.alertService.success("Saved Successfully");
+							this.submitted = false;
 						});
 					};
 				};
