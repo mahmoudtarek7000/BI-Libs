@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 	templateUrl: './bi-grid.component.html',
 	styleUrls: ['./bi-grid.component.scss']
 })
-export class BIGridComponent implements IGrid, OnInit {
+export class BIGridComponent implements  OnInit {
 	@Input() public DataService!: IDataSource;
 	@Input() Columns!: IColumns[];
 	@Input() GridName!: string;
@@ -62,8 +62,6 @@ export class BIGridComponent implements IGrid, OnInit {
 		});
 		if (!this.CurrentSelectRow?.controls) this.CurrentSelectRow = this.formBuilder.group(this.form);
 		this.CurrentSelectRow.valueChanges.subscribe(res => {
-			console.log(this.CurrentSelectRow);
-			
 			if (this.dataItem) {
 				Object.assign(this.dataItem, res);
 			}

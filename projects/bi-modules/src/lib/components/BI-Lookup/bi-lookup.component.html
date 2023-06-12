@@ -1,5 +1,5 @@
 <div class="input-group px-0 mt-2 mb-3 col-12" style="position:relative;">
-  <input type="text" class="form-control" [formControl]="formGroup" [title]="DescriptionText"
+  <input type="text" class="form-control" [formControl]="FormControl" [title]="DescriptionText"
     [ngClass]="{'error': !Isvalid} " [placeholder]="'Placeholder'" (change)="OnTextChange($event)"
     (mouseover)="OnInputHover()" (focus)="OnInputFocus()">
   <div class="input-group-append">
@@ -8,9 +8,10 @@
     </button>
   </div>
 </div>
+<span class="text-danger" *ngIf="ErrorMsg?.length">{{ErrorMsg}} </span>
 <!-- <app-context-menu [TargetURL]="'http://localhost:4200/#/'" #contextMenu></app-context-menu> -->
 
-<kendo-dialog title="Please confirm"  *ngIf="opened" (close)="CloseModal()" [minWidth]="700" [width]="700">
+<kendo-dialog title="Please confirm" *ngIf="opened" (close)="CloseModal()" [minWidth]="700" [width]="700">
   <kendo-grid [data]="data$ | async" filterable="menu" [height]="300" [pageable]="true" [sortable]="true"
     [pageSize]="state.take ? state.take : 0" [skip]="state.skip? state.skip: 0" (dataStateChange)="FilterChange($event)"
     (cellClick)="cellClickHandler($event)" [selectable]="true" (dblclick)="dblClickEvent()">
